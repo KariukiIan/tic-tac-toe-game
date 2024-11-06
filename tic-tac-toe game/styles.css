@@ -18,7 +18,7 @@
 body,
 html {
 	height: 100%;
-	background-color: rgb(2, 2, 32);
+	background-color: var(--light-gray);
 }
 
 body {
@@ -46,9 +46,12 @@ body {
 }
 
 .turn {
-	background-color: green;
 	grid-column-start: 1;
 	grid-column-end: 3;
+	align-self: center;
+	display: flex;
+	align-items: center;
+	gap: 20px;
 }
 
 .square {
@@ -56,17 +59,17 @@ body {
 }
 
 .score {
-	background-color: rgb(132, 132, 190);
+	background-color: var(--gray);
 }
 
 .actions {
-	background-color: purple;
+	background-color: var(--gray);
 }
 
 /* Footer styles */
 
 footer {
-	color: white;
+	color: var(--dark-gray);
 	margin-top: 50px;
 }
 
@@ -76,5 +79,5 @@ footer p {
 }
 
 footer a {
-	color: var(--yellow);
+	color: var(--turquoise);
 }
