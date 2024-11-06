@@ -12,6 +12,14 @@ html {
 	background-color: rgb(2, 2, 32);
 }
 
+body {
+	/* padding: 90px 20px; */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
 .grid {
 	display: grid;
 	grid-template-columns: repeat(3, 80px);
@@ -19,20 +27,29 @@ html {
 	gap: 5px;
 }
 
-.turn {
-	background-color: green;
-  grid-column-start: 1;
- grid-column-end: 3;
+@media (min-width: 768px) {
+	.grid {
+		width: 490px;
+		grid-template-columns: repeat(3, 150px);
+		grid-template-rows: 50px repeat(3, 150px) 60px;
+		gap: 20px;
+	}
 }
 
-.square { 
-  background-color: red;
+.turn {
+	background-color: green;
+	grid-column-start: 1;
+	grid-column-end: 3;
+}
+
+.square {
+	background-color: red;
 }
 
 .score {
-  background-color: rgb(132, 132, 190);
+	background-color: rgb(132, 132, 190);
 }
 
 .actions {
-  background-color: purple;
+	background-color: purple;
 }
