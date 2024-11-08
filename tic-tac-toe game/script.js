@@ -6,6 +6,9 @@ const App = {
 		resetBtn: document.querySelector('[data-id="reset-btn"]'),
 		newRoundBtn: document.querySelector('[data-id="new-round-btn"]'),
 		squares: document.querySelectorAll('[data-id="square"]'),
+		modal: document.querySelector('[data-id="modal"]'),
+		modalText: document.querySelector('[data-id="modal-text"]'),
+		modalBtn: document.querySelector('[data-id="modal-btn"]'),
 	},
 
 	state: {
@@ -67,6 +70,12 @@ const App = {
 			console.log("add new game");
 		});
 
+		App.$.modalBtn.addEventListener("click", (e) => {
+			App.state.moves = [];
+			App.$.squares.forEach((square) => square.replaceChildren());
+			App.$.modal.classList.add("hidden");
+		});
+
 		// square grid functionality.
 		App.$.squares.forEach((square) => {
 			square.addEventListener("click", (e) => {
@@ -112,11 +121,16 @@ const App = {
 				const game = App.getGameStatus(App.state.moves);
 
 				if (game.status === "complete") {
+					App.$.modal.classList.remove("hidden");
+
+					let message = "";
 					if (game.winner) {
-						alert(`player ${game.winner} wins`);
+						message = `Player ${game.winner} wins`;
 					} else {
-						alert("tie!");
+						message = `Tie game`;
 					}
+
+					App.$.modalText.textContent = message;
 				}
 			});
 		});
