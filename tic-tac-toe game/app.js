@@ -9,6 +9,7 @@ const App = {
 		modal: document.querySelector('[data-id="modal"]'),
 		modalText: document.querySelector('[data-id="modal-text"]'),
 		modalBtn: document.querySelector('[data-id="modal-btn"]'),
+		turn: document.querySelector('[data-id="turn"]'),
 	},
 
 	state: {
@@ -93,7 +94,6 @@ const App = {
 				}
 
 				// Determine which player icon to add to the square.
-
 				const lastMove = App.state.moves.at(-1); // finding the last move in the move array.
 
 				const getOppositePlayer = (playerId) => (playerId === 1 ? 2 : 1);
@@ -102,20 +102,31 @@ const App = {
 						? 1
 						: getOppositePlayer(lastMove.playerId);
 
-				const icon = document.createElement("i");
+				const nextPlayer = getOppositePlayer(currentPlayer);
+
+				const squareIcon = document.createElement("i");
+				const turnIcon = document.createElement("i");
+				const turnLabel = document.createElement("p");
+				turnLabel.innerText = `Player ${nextPlayer}, you are up!`;
 
 				if (currentPlayer === 1) {
-					icon.classList.add("fa-solid", "fa-x", "yellow");
+					squareIcon.classList.add("fa-solid", "fa-x", "yellow");
+					turnIcon.classList.add("fa-solid", "fa-o", "turquoise");
+          turnLabel.classList = "turquoise"
 				} else {
-					icon.classList.add("fa-solid", "fa-o", "turquoise");
+					squareIcon.classList.add("fa-solid", "fa-o", "turquoise");
+					turnIcon.classList.add("fa-solid", "fa-x", "yellow");
+          turnLabel.classList = "yellow"
 				}
+
+				App.$.turn.replaceChildren(turnIcon, turnLabel);
 
 				App.state.moves.push({
 					squareId: +square.id,
 					playerId: currentPlayer,
 				});
 
-				square.replaceChildren(icon);
+				square.replaceChildren(squareIcon);
 
 				// Check if there is a winner or tie game
 				const game = App.getGameStatus(App.state.moves);
