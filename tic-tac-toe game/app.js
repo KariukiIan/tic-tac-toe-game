@@ -189,8 +189,16 @@ function init() {
 	});
 
 	view.bindNewRoundEvent((e) => {
-		console.log("reset event");
-		console.log(e);
+		store.newRound();
+
+		view.clearMoves();
+		view.closeAll();
+		view.setTurnIndicator(store.game.currentPlayer);
+		view.updateScoreBoard(
+			store.stats.playerWithStats[0].wins,
+			store.stats.playerWithStats[1].wins,
+			store.stats.ties
+		);
 	});
 
 	view.bindPlayerMoveEvent((square) => {

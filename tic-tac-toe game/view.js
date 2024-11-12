@@ -33,7 +33,7 @@ export default class View {
 
 	bindNewRoundEvent(handler) {
 		this.$.newRoundBtn.addEventListener("click", handler);
-		this.$.modalBtn.addEventListener("click", handler);
+		//this.$.modalBtn.addEventListener("click", handler);
 	}
 
 	bindPlayerMoveEvent(handler) {
