@@ -31,7 +31,13 @@ function init() {
 			store.stats.playerWithStats[1].wins,
 			store.stats.ties
 		);
+		view.initializeMoves(store.game.moves);
 	}
+
+	window.addEventListener("storage", () => {
+		console.log("State changed from another tab");
+		initView();
+	});
 
 	initView();
 
