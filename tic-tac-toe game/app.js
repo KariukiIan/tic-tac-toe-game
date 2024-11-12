@@ -180,6 +180,12 @@ function init() {
 		view.clearMoves();
 
 		view.setTurnIndicator(store.game.currentPlayer);
+
+		view.updateScoreBoard(
+			store.stats.playerWithStats[0].wins,
+			store.stats.playerWithStats[1].wins,
+			store.stats.ties
+		);
 	});
 
 	view.bindNewRoundEvent((e) => {
