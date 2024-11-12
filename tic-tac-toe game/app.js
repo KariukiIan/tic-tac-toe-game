@@ -1,3 +1,6 @@
+import View from "./view.js";
+import Store from "./store.js";
+
 const App = {
 	// All of our HTML elements
 	$: {
@@ -112,11 +115,11 @@ const App = {
 				if (currentPlayer === 1) {
 					squareIcon.classList.add("fa-solid", "fa-x", "yellow");
 					turnIcon.classList.add("fa-solid", "fa-o", "turquoise");
-          turnLabel.classList = "turquoise"
+					turnLabel.classList = "turquoise";
 				} else {
 					squareIcon.classList.add("fa-solid", "fa-o", "turquoise");
 					turnIcon.classList.add("fa-solid", "fa-x", "yellow");
-          turnLabel.classList = "yellow"
+					turnLabel.classList = "yellow";
 				}
 
 				App.$.turn.replaceChildren(turnIcon, turnLabel);
@@ -128,7 +131,7 @@ const App = {
 
 				square.replaceChildren(squareIcon);
 
-				// Check if there is a winner or tie game
+				//Check if there is a winner or tie game
 				const game = App.getGameStatus(App.state.moves);
 
 				if (game.status === "complete") {
@@ -148,4 +151,69 @@ const App = {
 	},
 };
 
-window.addEventListener("load", App.init);
+// window.addEventListener("load", App.init);
+
+const players = [
+	{
+		id: 1,
+		name: "Player 1",
+		iconClass: "fa-x",
+		colorClass: "turquoise",
+	},
+	{
+		id: 2,
+		name: "Player 2",
+		iconClass: "fa-o",
+		colorClass: "yellow",
+	},
+];
+
+function init() {
+	const view = new View();
+	const store = new Store(players);
+
+	view.bindGameResetEvent((e) => {
+		view.closeAll();
+
+		store.reset();
+
+		view.clearMoves();
+
+		view.setTurnIndicator(store.game.currentPlayer);
+	});
+
+	view.bindNewRoundEvent((e) => {
+		console.log("reset event");
+		console.log(e);
+	});
+
+	view.bindPlayerMoveEvent((square) => {
+		const existingMove = store.game.moves.find(
+			(move) => move.squareId === +square.id
+		);
+
+		if (existingMove) {
+			return;
+		}
+
+		// Place an icon of the current player in a square
+		view.handlePlayerMove(square, store.game.currentPlayer);
+
+		// Advance to the next state by pushing a move to the move array
+		store.playerMove(+square.id);
+
+		if (store.game.status.isComplete) {
+			view.openModal(
+				store.game.status.winner
+					? `${store.game.status.winner.name} wins!`
+					: "Tie!"
+			);
+			return;
+		}
+
+		// Set the next player's turn indicator
+		view.setTurnIndicator(store.game.currentPlayer);
+	});
+}
+
+window.addEventListener("load", init);
